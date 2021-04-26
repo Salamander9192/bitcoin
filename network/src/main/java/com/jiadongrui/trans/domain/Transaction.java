@@ -1,5 +1,10 @@
 package com.jiadongrui.trans.domain;
 
+import com.jiadongrui.trans.Owner;
+import com.jiadongrui.trans.util.CalUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.security.PublicKey;
 
 /**
@@ -9,6 +14,8 @@ import java.security.PublicKey;
  * @create: 2021-04-22 21:32
  **/
 public class Transaction {
+
+    private static final Logger logger = LoggerFactory.getLogger(Transaction.class);
 
     /**
      * 交易唯一标识
@@ -34,6 +41,13 @@ public class Transaction {
      * 当前所有者的签名：由交易哈希值+当前所有者的私钥形成的数字签名
      */
     private String currOwnerSign;
+
+    public Transaction(Transaction preTransaction, PublicKey nextOwnerPublicKey) {
+        this.preTransaction = preTransaction;
+        this.nextOwnerPublicKey = nextOwnerPublicKey;
+        this.setTransactionHash(CalUtil.calHashCode(new HashCombine(this.preTransaction,this.nextOwnerPublicKey)));
+        logger.info("create transaction : [{}]",this);
+    }
 
     public String getTransactionID() {
         return transactionID;
