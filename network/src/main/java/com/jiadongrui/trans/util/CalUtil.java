@@ -1,5 +1,6 @@
 package com.jiadongrui.trans.util;
 
+import com.jiadongrui.trans.domain.Block;
 import com.jiadongrui.trans.domain.HashCombine;
 
 /**
@@ -14,6 +15,8 @@ public final class CalUtil {
         return String.valueOf(hashCombine.hashCode());
     }
 
-
+    public static String calHashCode(Block block){
+        return String.valueOf(block.hashCode());
+    }
 
 }
